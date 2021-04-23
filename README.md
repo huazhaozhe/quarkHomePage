@@ -11,6 +11,8 @@ H5仿夸克浏览器主页
 # 图标来源
 * Pure轻雨图标包
 # 在线地址
+[Github page](https://huazhaozhe.github.io/quarkHomePage/)
+# 原作者
 fork自[quarkHomePage](https://github.com/liumingye/quarkHomePage)
 原作者在线地址:[https://liumingye.gitee.io/quarkhomepage/](https://liumingye.gitee.io/quarkhomepage/)
 # 感谢开源项目
