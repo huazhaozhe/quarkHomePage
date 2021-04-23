@@ -646,6 +646,26 @@ require(['jquery'], function ($) {
 			searchText(evt.target.innerText);
 		}
 	});
+
+	var kuai_data = {
+		g: "https://www.google.com/search?q=%s",
+		zh: "https://www.zhihu.com/search?q=%s",
+		gh: "https://github.com/search?q=%s",
+		bk: "https://baike.baidu.com/search?word=%s",
+		// 视频: "https://m.v.qq.com/search.html?act=0&keyWord=%s",
+		db: "https://m.douban.com/search/?query=%s",
+		wb: "https://m.weibo.cn/search?containerid=100103type=1&q=%s",
+		新闻: "http://m.toutiao.com/search/?&keyword=%s",
+		图片: "https://m.baidu.com/sf/vsearch?pd=image_content&word=%s&tn=vsearch&atn=page",
+		// 音乐: "http://m.music.migu.cn/v3/search?keyword=%s",
+		// 小说: "https://m.qidian.com/search?kw=%s",
+		// 旅游: "https://h5.m.taobao.com/trip/rx-search/list/index.html?&keyword=%s",
+		地图: "https://m.amap.com/search/mapview/keywords=%s",
+		// 电视剧: "http://m.iqiyi.com/search.html?key=%s",
+		股票: "https://emwap.eastmoney.com/info/search/index?t=14&k=%s",
+		// 汽车: "https://sou.m.autohome.com.cn/zonghe?q=%s"
+	};
+
 	var qs_ajax = null;
 	$(".search-input").on("input propertychange", function () {
 		var that = this;
@@ -691,22 +711,28 @@ require(['jquery'], function ($) {
 				qs_ajax.abort();
 			}
 			if (has_char >= 0) {
-				qs_ajax = $.ajax({
-					url: "https://bird.ioliu.cn/v1?url=https://quark.sm.cn/api/qs?query=" + wd + "&ve=4.1.0.132",
-					type: "GET",
-					timeout: 5000,
-					success: function (res) {
-						if ($(that).val() !== wd) {
-							return;
-						}
-						var data = res.data;
-						var html = '<li>快搜:</li>';
-						for (var i = 0, l = data.length; i < l; i++) {
-							html += '<li>' + data[i] + '</li>';
-						}
-						$('.shortcut3').html(html);
-					}
-				});
+				// qs_ajax = $.ajax({
+				// 	url: "https://bird.ioliu.cn/v1?url=https://quark.sm.cn/api/qs?query=" + wd + "&ve=4.1.0.132",
+				// 	type: "GET",
+				// 	timeout: 5000,
+				// 	success: function (res) {
+				// 		if ($(that).val() !== wd) {
+				// 			return;
+				// 		}
+				// 		var data = res.data;
+				// 		var html = '<li>快搜:</li>';
+				// 		for (var i = 0, l = data.length; i < l; i++) {
+				// 			html += '<li>' + data[i] + '</li>';
+				// 		}
+				// 		$('.shortcut3').html(html);
+				// 	}
+				// });
+				var html = '<li>快搜:</li>';
+				var data = Object.keys(kuai_data);
+				for (var i = 0, l = data.length; i < l; i++) {
+					html += '<li>' + data[i] + '</li>';
+				}
+				$('.shortcut3').html(html);
 			}
 		}
 	});
@@ -721,25 +747,32 @@ require(['jquery'], function ($) {
 
 	$(".shortcut3").click(function (evt) {
 		if (evt.target.nodeName === "LI") {
-			var text = evt.target.innerText;
-			var data = {
-				百科: "https://baike.baidu.com/search?word=%s",
-				视频: "https://m.v.qq.com/search.html?act=0&keyWord=%s",
-				豆瓣: "https://m.douban.com/search/?query=%s",
-				新闻: "http://m.toutiao.com/search/?&keyword=%s",
-				图片: "https://m.baidu.com/sf/vsearch?pd=image_content&word=%s&tn=vsearch&atn=page",
-				微博: "https://m.weibo.cn/search?containerid=100103type=1&q=%s",
-				音乐: "http://m.music.migu.cn/v3/search?keyword=%s",
-				知乎: "https://www.zhihu.com/search?q=%s",
-				小说: "https://m.qidian.com/search?kw=%s",
-				旅游: "https://h5.m.taobao.com/trip/rx-search/list/index.html?&keyword=%s",
-				地图: "https://m.amap.com/search/mapview/keywords=%s",
-				电视剧: "http://m.iqiyi.com/search.html?key=%s",
-				股票: "https://emwap.eastmoney.com/info/search/index?t=14&k=%s",
-				汽车: "https://sou.m.autohome.com.cn/zonghe?q=%s"
+			var search = evt.target.innerText;
+			var search_text = $(".search-input").val();
+			var text_split = search_text.split(" ");
+			if (text_split.length >= 2 && text_split[0] in kuai_data){
+				var text = text_split.slice(1).join(" ");
+			} else {
+				var text = search_text;
 			}
-			if (data[text]) {
-				location.href = data[text].replace("%s", $(".search-input").val());
+			// var data = {
+			// 	百科: "https://baike.baidu.com/search?word=%s",
+			// 	视频: "https://m.v.qq.com/search.html?act=0&keyWord=%s",
+			// 	豆瓣: "https://m.douban.com/search/?query=%s",
+			// 	新闻: "http://m.toutiao.com/search/?&keyword=%s",
+			// 	图片: "https://m.baidu.com/sf/vsearch?pd=image_content&word=%s&tn=vsearch&atn=page",
+			// 	微博: "https://m.weibo.cn/search?containerid=100103type=1&q=%s",
+			// 	音乐: "http://m.music.migu.cn/v3/search?keyword=%s",
+			// 	知乎: "https://www.zhihu.com/search?q=%s",
+			// 	小说: "https://m.qidian.com/search?kw=%s",
+			// 	旅游: "https://h5.m.taobao.com/trip/rx-search/list/index.html?&keyword=%s",
+			// 	地图: "https://m.amap.com/search/mapview/keywords=%s",
+			// 	电视剧: "http://m.iqiyi.com/search.html?key=%s",
+			// 	股票: "https://emwap.eastmoney.com/info/search/index?t=14&k=%s",
+			// 	汽车: "https://sou.m.autohome.com.cn/zonghe?q=%s"
+			// }
+			if (kuai_data[search]) {
+				location.href = kuai_data[search].replace("%s", text);
 			}
 		}
 	});
@@ -784,7 +817,10 @@ require(['jquery'], function ($) {
 		searchHistory.add(text);
 		history.go(-1);
 		setTimeout(function () { // 异步执行 兼容QQ浏览器
-			if (settings.get('engines') === "via") {
+			var text_split = text.split(" ");
+			if (text_split.length >= 2 && text_split[0] in kuai_data){
+				location.href = kuai_data[text_split[0]].replace("%s", text_split.slice(1).join(" "));
+			} else if (settings.get('engines') === "via") {
 				window.via.searchText(text);
 			} else {
 				location.href = {
@@ -798,6 +834,7 @@ require(['jquery'], function ($) {
 					diy: settings.get('diyEngines')
 				}[settings.get('engines')].replace("%s", text);
 			}
+
 		}, 1);
 	}
 
