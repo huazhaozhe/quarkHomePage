@@ -666,6 +666,17 @@ require(['jquery'], function ($) {
 		// 汽车: "https://sou.m.autohome.com.cn/zonghe?q=%s"
 	};
 
+	function initShortcut3(){
+		var html = '<li>快搜:</li>';
+		var data = Object.keys(kuai_data);
+		for (var i = 0, l = data.length; i < l; i++) {
+			html += '<li>' + data[i] + '</li>';
+		}
+		$('.shortcut3').html(html);
+	};
+
+	initShortcut3();
+
 	var qs_ajax = null;
 	$(".search-input").on("input propertychange", function () {
 		var that = this;
@@ -681,8 +692,8 @@ require(['jquery'], function ($) {
 			$(".history").hide();
 			$(".empty-input").show();
 			$(".search-btn").html(/^\b(((https?|ftp):\/\/)?[-a-z0-9]+(\.[-a-z0-9]+)*\.(?:com|net|org|int|edu|gov|mil|arpa|asia|biz|info|name|pro|coop|aero|museum|[a-z][a-z]|((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d))\b(\/[-a-z0-9_:\@&?=+,.!\/~%\$]*)?)$/i.test(wd) ? "进入" : "搜索");
-			var has_char = escape(wd).indexOf("%u");
-			has_char < 0 ? $(".shortcut2").show() : $(".shortcut3").show();
+			var has_char = escape(wd).indexOf(".");
+			has_char > 0 ? $(".shortcut2").show() : $(".shortcut3").show();
 			$.ajax({
 				url: "https://suggestion.baidu.com/su",
 				type: "GET",
@@ -710,7 +721,7 @@ require(['jquery'], function ($) {
 			if (qs_ajax) {
 				qs_ajax.abort();
 			}
-			if (has_char >= 0) {
+			// if (has_char >= 0) {
 				// qs_ajax = $.ajax({
 				// 	url: "https://bird.ioliu.cn/v1?url=https://quark.sm.cn/api/qs?query=" + wd + "&ve=4.1.0.132",
 				// 	type: "GET",
@@ -727,13 +738,7 @@ require(['jquery'], function ($) {
 				// 		$('.shortcut3').html(html);
 				// 	}
 				// });
-				var html = '<li>快搜:</li>';
-				var data = Object.keys(kuai_data);
-				for (var i = 0, l = data.length; i < l; i++) {
-					html += '<li>' + data[i] + '</li>';
-				}
-				$('.shortcut3').html(html);
-			}
+			// }
 		}
 	});
 
