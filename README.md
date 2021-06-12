@@ -2,12 +2,8 @@
 
 ## quarkHomePage
 H5仿夸克浏览器主页
-![](https://ae01.alicdn.com/kf/H244bb0ca385f4109a1c9d11d4a8be564O.jpg)
-# 更新计划
-1. 搜索历史
-2. 壁纸库
-3. 夜间模式
-4. 可以添加预设书签
+![](res/Screenshot_2021-06-12-09-44-33-371_mark.via.gp.jpg)
+![](res/Screenshot_2021-06-12-09-45-35-149_mark.via.gp.jpg)
 # 图标来源
 * Pure轻雨图标包
 # 在线地址
