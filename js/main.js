@@ -99,16 +99,18 @@ require(['jquery'], function ($) {
 				}
 			};
 //			if (that.get('nightMode') === true) {
-            if (
-                (
-                    that.get('nightModeWithSystem') === true &&
-                    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-                ) ||
-                    that.get('nightMode') === true
-            ) {
-                nightMode.on();
+            if (that.get('nightModeWithSystem') === true) {
+                if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches){
+                    nightMode.on();
+                } else {
+                    nightMode.off();
+                }
             } else {
-                nightMode.off();
+                if (that.get('nightMode') === true) {
+                    nightMode.on();
+                } else {
+                    nightMode.off();
+                }
             }
 			// 删除掉VIA浏览器夜间模式的暗色支持
 			$("head").on("DOMNodeInserted DOMNodeRemoved", function (evt) {
