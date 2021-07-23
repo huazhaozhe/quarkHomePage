@@ -292,7 +292,8 @@ body,html {
 	opacity: 1;
 }
 .bottom-row{
-	position: absolute;
+	/* position: absolute; */
+	position: fixed;
 	bottom: 0;
 	width: 100%;
 	background: #fff;
@@ -301,7 +302,8 @@ body,html {
 .suggestion, .history{overflow:auto;width:100%;
 	max-height: calc(100% - 122px);
 	bottom: 122px;
-	position: absolute;
+	/* position: absolute; */
+	position: fixed;
 }
 .history{
 	font-size: 13px;
